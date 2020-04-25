@@ -1,0 +1,14 @@
+.LoginPageDiv{
+    padding: 15px;
+}
+.LoginButton{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.LoginInput
+{
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

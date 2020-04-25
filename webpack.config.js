@@ -5,11 +5,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	entry:  [
-		path.join( __dirname ,  'index.js')
+		path.join( __dirname ,  'App.js')
 	],
 	output: {
 		path: path.join( __dirname , 'firebase/'),
 		publicPath: 'firebase/',
+		publicPath: 'https://www.gstatic.com',
 		filename: 'chatroom.min.js'
 	},
 	resolve: {
