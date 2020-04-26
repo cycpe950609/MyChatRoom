@@ -52,9 +52,9 @@ export class LoginPage extends React.Component{
             //alert('Success Login with Google');
             this.props.SignInSuccess();
         })
-        /*.catch(function(error) {
+        .catch(function(error) {
             alert("Error Login :" + error.message);
-        });*/
+        });
     }
 
     btnNewAccount_onClick(e){

@@ -3,6 +3,8 @@ import './firebase.config.js';
 import { Dialogue } from './control/Dialogue/Dialogue.js'
 import { LoginPage } from './page/login/login.js'
 import { Drawer } from './control/Drawer/Drawer.js'
+import { Header } from './page/chatroom/header.js'
+import { Sidebar } from './page/chatroom/Sidebar.js'
 
 
 class Application extends React.Component
@@ -12,7 +14,8 @@ class Application extends React.Component
         super(props);
         this.state = {
             iflogin:false,
-            ifCheckLogin:false
+            ifCheckLogin:false,
+            UserName:"User's Name"
         };
 
         firebase.auth().onAuthStateChanged((user) => {
@@ -34,14 +37,15 @@ class Application extends React.Component
         });
 
         this.SignInSuccess = this.SignInSuccess.bind(this);
+        this.SignOutSuccess = this.SignOutSuccess.bind(this);
     }
 
     render()
     {
         return (
             <div className="CR_Application">
-                { this.state.iflogin && this.state.ifCheckLogin ? <Drawer id="CR_Drawer"></Drawer> : null }
-                { this.state.iflogin && this.state.ifCheckLogin  ? null : <Dialogue id="CR_Dialogue" title="Sign In"><LoginPage SignInSuccess={this.SignInSuccess} /></Dialogue> }
+                { this.state.iflogin && this.state.ifCheckLogin ? <Drawer id="CR_Drawer" Header={<Header UserName={ this.state.UserName } SignOutSuccess={this.SignOutSuccess} />} Sidebar={<Sidebar/>}></Drawer> : null }
+                { !this.state.iflogin && this.state.ifCheckLogin  ? <Dialogue id="CR_Dialogue" title="Sign In"><LoginPage SignInSuccess={this.SignInSuccess} /></Dialogue> : null }
             </div>
         );
     }
@@ -54,26 +58,15 @@ class Application extends React.Component
         this.setState({
             iflogin : true
         })
-        this.forceUpdate();
-        
-        //document.getElementById("CR_Dialogue").style.display = 'none';
-        //ReactDOM.render(<Drawer></Drawer>, document.getElementById("CR_Dialogue"));
+        //this.forceUpdate();
     }
 
-    SignOut() 
+    SignOutSuccess() 
     {
-        firebase.auth().signOut()
-        .then((success)=>{
-
-            alert("Success Log Out");
-            ReactDOM.render(<Dialogue title="Sign In"><LoginPage/></Dialogue>, document.getElementById("CR_Dialogue"));
-
+        this.setState({
+            iflogin : false
         })
-        .catch((error)=>{
-
-            alert("Error Sign Out : " + error.message);
-
-        });
+        //this.forceUpdate();
     }
 
 }
