@@ -1,6 +1,20 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "$uid":{
+      "friends":{
+        ".read" : false,
+        ".write": false
+      },
+      "chatroom_group":{
+        "$gp_id":{
+          ".read" : false,
+          ".write": false
+        }
+      },
+      "setting":{
+        ".read" : false,
+        ".write": false
+      }
+    }
   }
 }

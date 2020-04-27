@@ -1,0 +1,35 @@
+.SidebarDiv
+{
+    height: 100%;
+    width: 100%;
+    /* overflow: hidden; */
+}
+
+.SidebarList{
+    width: 100%;
+    /* overflow-y: auto !important;
+    overflow-x: hidden; */
+}
+
+
+.SiderbarTab{
+    width: 100%;
+}
+.btnSidebarNew{
+    background-size: 60% 60%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    
+}
+
+.FriendsListItem{
+    margin-left: 15px;
+}
+.ListItemAvatar{
+    background-color: inherit;
+
+    border-style: solid;
+    border-width: 4px;
+    border-color: '#343a40';
+    border-radius: 50%;
+}

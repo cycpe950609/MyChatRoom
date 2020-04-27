@@ -33,6 +33,7 @@ module.exports = {
 				options: {
 					name: '[name].[ext]',
 					outputPath: 'img/',
+					publicPath: 'img/'
 				}
 			}
 		},
@@ -42,16 +43,6 @@ module.exports = {
 				'style-loader', // execute second(order is important)
 				'css-loader' // execute first
 			]
-		},
-		{
-			test: /\.(jpe?g|png|gif|webp)$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						name: '[name].[ext]',
-						outputPath: 'img/',
-					}
-				}
 		},
 		{
 			test: /\.(html?)$/,

@@ -1,0 +1,26 @@
+.header{
+    background-color: yellow;
+    width: 100%;
+}
+.content{
+    background-color: blue;
+}
+
+
+.chatroom_header_icon{
+    background-image: url('../../img/chatroom.png');
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    pointer-events:none;
+}
+
+@media (max-width : 800px){/* x2 of sidebar*/
+    .chatroom_header_icon{
+        background-image: url('../../img/menu.png');
+        width: 30px;
+        height: 30px;
+        background-size: cover;
+        pointer-events:auto;
+    }    
+} 

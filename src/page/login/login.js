@@ -1,5 +1,5 @@
 import './login.css';
-import Button from 'react-bootstrap/Button'
+
 
 export class LoginPage extends React.Component{
     constructor(props) {
@@ -10,6 +10,7 @@ export class LoginPage extends React.Component{
         this.btnSignIn_onClick          = this.btnSignIn_onClick.bind(this);
         this.btnGoogleSignIn_onClick    = this.btnGoogleSignIn_onClick.bind(this);
         this.btnNewAccount_onClick      = this.btnNewAccount_onClick.bind(this);
+        this.btnFacebookSignIn_onClick  = this.btnFacebookSignIn_onClick.bind(this);
         //this.props.SignInSuccess        = this.props.SignInSuccess.bind(this);
 
     }
@@ -17,11 +18,24 @@ export class LoginPage extends React.Component{
     render() {
         return (
             <div className="LoginPageDiv">
-                <input  type="email"        id="inputEmail"         className="LoginInput"  placeholder="Email address" required autoFocus />
-                <input  type="password"     id="inputPassword"      className="LoginInput"  placeholder="Password" required />
-                <Button variant="primary"   id='btnSignIn'          onClick={this.btnSignIn_onClick}            className="LoginButton">Sign In</Button>
-                <Button variant="info"      id='btnGoogleSignIn'    onClick={this.btnGoogleSignIn_onClick}      className="LoginButton">Sign in with Google</Button>
-                <Button variant="secondary" id='btnNewAccount'      onClick={this.btnNewAccount_onClick}        className="LoginButton">New account</Button>
+                <div className="TD_Background" id="td_dialog_bg">
+                    <div className="Top_Dialog" id="td_dialog">
+                        <div className="TD_Header">
+                            <span className="TD_Title" id="td_title">Sign In </span>
+                        </div>
+                        <div className="TD_Body" id="td_dialog_body">
+                            <input  type="email"        id="inputEmail"         class="LoginInput"  placeholder="Email address" required autoFocus />
+                            <input  type="password"     id="inputPassword"      class="LoginInput"  placeholder="Password" required />
+                            <button id='btnSignIn'          onClick={this.btnSignIn_onClick}    className="LoginButton">Sign In</button>
+                            <button id='btnGoogleSignIn'    onClick={this.btnGoogleSignIn_onClick}    className="LoginButton">Sign in with Google</button>
+                            <button id='btnFacebookSignIn'  onClick={this.btnFacebookSignIn_onClick}    className="LoginButton">Sign in with Facebook</button>
+                            <button id='btnNewAccount'      onClick={this.btnNewAccount_onClick}    className="LoginButton">New account</button>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                
             </div> 
         );
     }
@@ -50,6 +64,18 @@ export class LoginPage extends React.Component{
         .then((result) => {
             
             //alert('Success Login with Google');
+            this.props.SignInSuccess();
+        })
+        .catch(function(error) {
+            alert("Error Login :" + error.message);
+        });
+    }
+
+    btnFacebookSignIn_onClick(e){
+        let fb_provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(fb_provider)
+        .then((result) => {
+            //alert('Success Login with Facebook');
             this.props.SignInSuccess();
         })
         .catch(function(error) {
