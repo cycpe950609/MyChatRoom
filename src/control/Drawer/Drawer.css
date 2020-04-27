@@ -9,20 +9,36 @@
 
 .DrawerHead{
     width: 100%;
-    height: auto;
+    height: 60px;
     background-color: black;
 }
 
 .DrawerSidebar{
     background-color: whitesmoke;
+    width: 400px;
 }
 
 .DrawerContent{
     background-color: green;
+    width: calc(100% - 400px );
 }
-.display-table{
-    display: table;
+
+@media (max-width : 800px){
+    .DrawerSidebar{
+        background-color: whitesmoke;
+        width: 400px;
+        display: none;
+    }
+    
+    .DrawerContent{
+        background-color: green;
+        width: 100%;
+    }
+
 }
-.display-table-cell{
-    display:table-cell;
+
+.SideBarAndContent
+{
+    width: 100%;
+    height: calc(100% - 60px);
 }

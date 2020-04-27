@@ -16,13 +16,13 @@ export class Drawer extends React.Component
     {
         //no-padding-x : set in index.css
         return(
-            <div className="container-fluid no-padding-x display-table DrawerBody">
-                <div className="row no-gutters no-padding-x">
+            <div className="no-padding-x display-table DrawerBody">
+                <div className="no-gutters no-padding-x DrawerHead">
                     {this.props.Header}
                 </div>
-                <div className="row no-gutters no-padding-x">
-                    <div className="col-3 DrawerSidebar display-table-cell">{this.props.Sidebar}</div>
-                    <div className="col-9 DrawerContent display-table-cell">{this.props.children}</div>
+                <div className="no-gutters no-padding-x SideBarAndContent">
+                    <div className="DrawerSidebar">{this.props.Sidebar}</div>
+                    <div className="DrawerContent">{this.props.children}</div>
                 </div>
             </div>
         );
