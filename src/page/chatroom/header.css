@@ -13,6 +13,7 @@
     height: 30px;
     background-size: cover;
     pointer-events:none;
+    cursor: default;
 }
 
 @media (max-width : 800px){/* x2 of sidebar*/
@@ -22,5 +23,6 @@
         height: 30px;
         background-size: cover;
         pointer-events:auto;
+        cursor: pointer; 
     }    
 } 
