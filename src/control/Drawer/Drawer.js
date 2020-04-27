@@ -20,7 +20,7 @@ export class Drawer extends React.Component
                 <div className="no-gutters no-padding-x DrawerHead">
                     {this.props.Header}
                 </div>
-                <div className="no-gutters no-padding-x SideBarAndContent">
+                <div className="SideBarAndContent">
                     <div className="DrawerSidebar">{this.props.Sidebar}</div>
                     <div className="DrawerContent">{this.props.children}</div>
                 </div>

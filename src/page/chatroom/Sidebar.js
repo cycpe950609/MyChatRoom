@@ -19,13 +19,13 @@ export class Sidebar extends React.Component
     render()
     {
         let lst = [];
-            // for (let i = 0; i < 100; i++) {
-            //     lst.push(this.createFriendsListItem(i + '@gmail.com', i));
-            // }
+            for (let i = 0; i < 100; i++) {
+                lst.push(this.createFriendsListItem(i + '@gmail.com', i));
+            }
         //{ this.state.ifShowFriends ? this.state.MyFriends : this.state.MyChatRoom }
         return (
             
-            <div className="SidebarDiv d-flex align-items-end flex-column">
+            <div className="SidebarDiv">
                 <ul className="list-group SidebarList">
                     {lst.map((item) =>(
                         <li className="list-group-item">{item}</li>

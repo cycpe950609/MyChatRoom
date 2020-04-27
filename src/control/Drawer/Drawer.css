@@ -15,23 +15,30 @@
 
 .DrawerSidebar{
     background-color: whitesmoke;
+    height: 100%;
     width: 400px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .DrawerContent{
     background-color: green;
+    height: 100%;
     width: calc(100% - 400px );
+    display: inline-block;
 }
 
 @media (max-width : 800px){
     .DrawerSidebar{
         background-color: whitesmoke;
         width: 400px;
+        height: 100%;
         display: none;
     }
     
     .DrawerContent{
         background-color: green;
+        height: 100%;
         width: 100%;
     }
 
@@ -41,4 +48,5 @@
 {
     width: 100%;
     height: calc(100% - 60px);
+    display: inline-block;
 }
