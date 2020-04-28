@@ -4,7 +4,8 @@ import { Dialogue } from './control/Dialogue/Dialogue.js'
 import { LoginPage } from './page/login/login.js'
 import { Drawer } from './control/Drawer/Drawer.js'
 import { Header } from './page/chatroom/header.js'
-import { Sidebar } from './page/chatroom/Sidebar.js'
+import { Sidebar } from './page/chatroom/sidebar.js'
+import { ChatRoom } from './page/chatroom/chatroom.js'
 
 
 class Application extends React.Component
@@ -44,7 +45,7 @@ class Application extends React.Component
     {
         return (
             <div className="CR_Application">
-                { this.state.iflogin && this.state.ifCheckLogin ? <Drawer id="CR_Drawer" Header={<Header UserName={ this.state.UserName } SignOutSuccess={this.SignOutSuccess} />} Sidebar={<Sidebar/>}></Drawer> : null }
+                { this.state.iflogin && this.state.ifCheckLogin ? <Drawer id="CR_Drawer" Header={<Header UserName={ this.state.UserName } SignOutSuccess={this.SignOutSuccess} />} Sidebar={<Sidebar/>}><ChatRoom/></Drawer> : null }
                 { !this.state.iflogin && this.state.ifCheckLogin  ? <Dialogue id="CR_Dialogue" title="Sign In"><LoginPage SignInSuccess={this.SignInSuccess} /></Dialogue> : null }
             </div>
         );

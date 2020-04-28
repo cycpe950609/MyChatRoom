@@ -22,7 +22,7 @@
 }
 
 .DrawerContent{
-    background-color: green;
+    background-color: white;
     height: 100%;
     width: calc(100% - 400px );
     display: inline-block;
@@ -37,7 +37,7 @@
     }
     
     .DrawerContent{
-        background-color: green;
+        background-color: white;
         height: 100%;
         width: 100%;
     }
