@@ -11,8 +11,14 @@ export class ChatRoom extends React.Component
         this.state = {
             ifShowFriends:false // false to show Chatroom
         }   
-        
-        //console.log(this.state.MyFriends);
+    }
+
+    componentDidMount()
+    {
+        this.props.StartTask();
+        //TODO : Load chatroom content
+        this.props.FinishTask();
+
     }
     
     render()
@@ -33,7 +39,7 @@ export class ChatRoom extends React.Component
                 <div className="ChatRoomText mt-auto input-group mb-3">
                     <input type="text" className="form-control"/>
                     <div className="input-group-append">
-                        <button class="btn btn-dark" type="button">
+                        <button className="btn btn-dark" type="button">
                             <img src="./img/send_message.png" width="30" height="30" alt=""/>
                         </button>
                     </div>

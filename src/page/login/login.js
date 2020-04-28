@@ -16,6 +16,7 @@ export class LoginPage extends React.Component{
     }
 
     render() {
+        //console.log('Login Render');
         return (
             <div className="LoginPageDiv">
                 <div className="TD_Background" id="td_dialog_bg">
@@ -24,8 +25,8 @@ export class LoginPage extends React.Component{
                             <span className="TD_Title" id="td_title">Sign In </span>
                         </div>
                         <div className="TD_Body" id="td_dialog_body">
-                            <input  type="email"        id="inputEmail"         class="LoginInput"  placeholder="Email address" required autoFocus />
-                            <input  type="password"     id="inputPassword"      class="LoginInput"  placeholder="Password" required />
+                            <input  type="email"        id="inputEmail"         className="LoginInput"  placeholder="Email address" required autoFocus />
+                            <input  type="password"     id="inputPassword"      className="LoginInput"  placeholder="Password" required />
                             <button id='btnSignIn'          onClick={this.btnSignIn_onClick}    className="LoginButton">Sign In</button>
                             <button id='btnGoogleSignIn'    onClick={this.btnGoogleSignIn_onClick}    className="LoginButton">Sign in with Google</button>
                             <button id='btnFacebookSignIn'  onClick={this.btnFacebookSignIn_onClick}    className="LoginButton">Sign in with Facebook</button>
@@ -59,7 +60,7 @@ export class LoginPage extends React.Component{
 
     btnGoogleSignIn_onClick(e){
         let gle_provider = new firebase.auth.GoogleAuthProvider();
-        console.log(this);
+        //console.log(this);
         firebase.auth().signInWithPopup(gle_provider)
         .then((result) => {
             

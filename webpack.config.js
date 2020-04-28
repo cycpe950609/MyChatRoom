@@ -11,6 +11,7 @@ module.exports = {
 		path: path.join( __dirname , 'firebase/'),
 		publicPath: 'firebase/',
 		publicPath: 'https://www.gstatic.com',
+		publicPath: 'https://stackpath.bootstrapcdn.com',
 		filename: 'chatroom.min.js'
 	},
 	resolve: {

@@ -8,11 +8,19 @@ export class Sidebar extends React.Component
     constructor(props)
     {
         super(props);
+        
         this.state = {
             ifShowFriends:false // false to show Chatroom
         }   
         
-        //console.log(this.state.MyFriends);
+    }
+
+    componentDidMount()
+    {
+        this.props.StartTask();
+        //TODO : Load List of Friends , Groups
+        this.props.FinishTask();
+
     }
     //var MyFriends = [<span>My Friends is empty</span>];
     //var MyChatRoom = [<span>My ChatRooms is empty</span>];
