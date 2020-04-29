@@ -11,38 +11,7 @@ body {
     display: flex !important; 
     /* flex-direction: column !important; */
 }
-.ApplcationGroup{
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    position: relative;
-}
 
-.CR_Application{
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-}
-#CR_Drawer
-{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-#CR_Dialogue
-{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
 
 .no-padding-x{
     padding-left: 0;
