@@ -20,7 +20,7 @@ export class Header extends React.Component
                     <div className="chatroom_header_icon"  alt="" onClick={this.btnIcon_onClick}/>
                     <span className="mx-auto my-0" id="chatroom_header_title">User's Name</span>
                     <ul className="nav navbar-nav navbar-right">
-                        <li><button className="btn btn-dark" ><img src="./img/logout.png" width="30" height="30" alt=""/></button></li>
+                        <li><button className="btn btn-dark" onClick={this.SignOutProcess}><img src="./img/logout.png" width="30" height="30" alt=""/></button></li>
                     </ul>  
                 </nav>    
             </div>
@@ -29,7 +29,18 @@ export class Header extends React.Component
 
     btnIcon_onClick(e)
     {
-        alert('Btn Click');
+        alert('btnIcon Click');
+    }
+
+    btnLogout_onClick(e)
+    {
+        firebase.auth().signOut()
+        .then((e)=> {
+            this.props.SignOutSuccess();
+        })
+        .catch((e)=> {
+            alert('Sign Out Error : ' + error.message);
+        });
     }
 
     SignOutProcess()
@@ -50,3 +61,4 @@ export class Header extends React.Component
     }
 
 }
+//TODO : Add logout event to Button of Logout

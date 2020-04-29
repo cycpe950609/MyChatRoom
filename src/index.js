@@ -161,7 +161,7 @@ function FinishTask()
 //Init GUI
 ReactDOM.render(<Application StartTask={StartTask} FinishTask={FinishTask} />,document.getElementsByClassName('CR_Application')[0]); 
 
-
+//TODO : Refact class Application to another js/css
 
 
 

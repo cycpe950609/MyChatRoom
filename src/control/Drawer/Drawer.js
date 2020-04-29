@@ -27,5 +27,6 @@ export class Drawer extends React.Component
             </div>
         );
     }
-
+    //TODO : Add support to drawer in/out after clicking the button of menu
+    //TODO : Add animation to drawer in/out
 }
