@@ -19,24 +19,12 @@ export class LoginPage extends React.Component{
         //console.log('Login Render');
         return (
             <div className="LoginPageDiv">
-                <div className="TD_Background" id="td_dialog_bg">
-                    <div className="Top_Dialog" id="td_dialog">
-                        <div className="TD_Header">
-                            <span className="TD_Title" id="td_title">Sign In </span>
-                        </div>
-                        <div className="TD_Body" id="td_dialog_body">
-                            <input  type="email"        id="inputEmail"         className="LoginInput"  placeholder="Email address" required autoFocus />
-                            <input  type="password"     id="inputPassword"      className="LoginInput"  placeholder="Password" required />
-                            <button id='btnSignIn'          onClick={this.btnSignIn_onClick}    className="LoginButton">Sign In</button>
-                            <button id='btnGoogleSignIn'    onClick={this.btnGoogleSignIn_onClick}    className="LoginButton">Sign in with Google</button>
-                            <button id='btnFacebookSignIn'  onClick={this.btnFacebookSignIn_onClick}    className="LoginButton">Sign in with Facebook</button>
-                            <button id='btnNewAccount'      onClick={this.btnNewAccount_onClick}    className="LoginButton">New account</button>
-                        </div>
-                    </div>
-                    
-                </div>
-
-                
+                <input  type="email"        id="inputEmail"         className="LoginInput"  placeholder="Email address" required autoFocus />
+                <input  type="password"     id="inputPassword"      className="LoginInput"  placeholder="Password" required />
+                <button id='btnSignIn'          onClick={this.btnSignIn_onClick}    className="LoginButton">Sign In</button>
+                <button id='btnGoogleSignIn'    onClick={this.btnGoogleSignIn_onClick}    className="LoginButton">Sign in with Google</button>
+                <button id='btnFacebookSignIn'  onClick={this.btnFacebookSignIn_onClick}    className="LoginButton">Sign in with Facebook</button>
+                <button id='btnNewAccount'      onClick={this.btnNewAccount_onClick}    className="LoginButton">New account</button>  
             </div> 
         );
     }
