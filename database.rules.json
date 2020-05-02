@@ -1,20 +1,52 @@
 {
   "rules": {
-    "$uid":{
-      "friends":{
-        ".read" : false,
-        ".write": false
-      },
-      "chatroom_group":{
-        "$gp_id":{
-          ".read" : false,
-          ".write": false
-        }
-      },
-      "setting":{
+    "users_name_with_id":{
+      ".read" : false,
+      ".write": false
+    },
+    "chatroom":{
+      "$gp_id":{
         ".read" : false,
         ".write": false
       }
+    },
+
+    "user_data":{
+      "$uid":{
+        "setting":{
+          ".read" : "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
+        },
+  
+        "friends":{
+          ".read" : "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
+        },
+        "inviting_friend":{
+          ".read" : "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
+        },
+        "invited_friend":{
+          ".read" : "$uid === auth.uid",
+          ".write": false
+        },
+  
+        
+  
+        "chatroom_group":{
+          ".read" : "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
+        },
+        "inviting_group":{
+          ".read" : "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
+        },
+        "invited_group":{
+          ".read" : "$uid === auth.uid",
+          ".write": false
+        }
+      }
     }
+    
   }
 }

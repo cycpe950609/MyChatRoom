@@ -8,8 +8,8 @@ module.exports = {
 		path.join( __dirname ,  'App.js')
 	],
 	output: {
-		path: path.join( __dirname , 'firebase/'),
-		publicPath: 'firebase/',
+		path: path.join( __dirname , 'public/'),
+		publicPath: 'public/',
 		publicPath: 'https://www.gstatic.com',
 		publicPath: 'https://stackpath.bootstrapcdn.com',
 		filename: 'chatroom.min.js'
@@ -86,6 +86,5 @@ module.exports = {
 			},
 			inject: false
 		})
-		
 	],
 };

@@ -11,7 +11,10 @@ body {
     display: flex !important; 
     /* flex-direction: column !important; */
 }
-
+.FullSize{
+    height: 100%;
+    width: 100%;
+}
 
 .no-padding-x{
     padding-left: 0;

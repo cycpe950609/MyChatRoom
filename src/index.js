@@ -1,3 +1,4 @@
+import './firebase.config.js';
 import { Application } from './Application.js'
 
 function StartTask()

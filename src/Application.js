@@ -1,12 +1,10 @@
 import './Application.css'
-import './firebase.config.js';
-
-import { Dialogue } from './control/Dialogue/Dialogue.js'
 import { LoginPage } from './page/login/login.js'
 import { Drawer } from './control/Drawer/Drawer.js'
 import { Header } from './page/chatroom/header.js'
 import { Sidebar } from './page/chatroom/sidebar.js'
 import { ChatRoom } from './page/chatroom/chatroom.js'
+import { Dialog } from './control/Dialog/Dialog';
 //import { Loading } from './control/Loading/loading.js'
 
 
@@ -68,7 +66,7 @@ export class Application extends React.Component
             }
         ).catch(
             (error)=>{
-                alert('Error checking : ' + error.message);
+                console.log('Error checking : ' + error.message);
             }
         )
     }
@@ -119,12 +117,12 @@ export class Application extends React.Component
     RenderLoginPage()
     {
         return ( !this.state.iflogin && this.state.ifCheckLogin  ? 
-                    <Dialogue id="CR_Dialogue" title="Sign In">
+                    <Dialog id="CR_Dialogue" title="Sign In" BackgroundColor='black'>
                         <LoginPage SignInSuccess={this.SignInSuccess} 
                             StartTask={this.props.StartTask}
                             FinishTask={this.props.FinishTask}
                         />
-                    </Dialogue> 
+                    </Dialog> 
                     : 
                     null 
                 );
