@@ -70,7 +70,7 @@ export class LoginPage extends React.Component{
             //alert('Success Login with email');
             this.ProcessAfterLogin();
         })
-        .catch(function(error) {
+        .catch((error) => {
             var errorMessage = error.message;
             txtEmail.value = "";
             txtPassword.value = "";
@@ -90,7 +90,7 @@ export class LoginPage extends React.Component{
             //alert('Success Login with Google');
             this.ProcessAfterLogin();
         })
-        .catch(function(error) {
+        .catch((error) => {
             alert("Error Login :" + error.message);
             this.props.FinishTask();
         });
@@ -105,13 +105,14 @@ export class LoginPage extends React.Component{
             //alert('Success Login with Facebook');
             this.ProcessAfterLogin();
         })
-        .catch(function(error) {
+        .catch((error) => {
             alert("Error Login :" + error.message);
             this.props.FinishTask();
         });
     }
 
     btnNewAccount_onClick(e){
+        this.props.StartTask();
 
         let txtEmail = document.getElementById('inputEmail');
         let txtPassword = document.getElementById('inputPassword');
@@ -119,14 +120,16 @@ export class LoginPage extends React.Component{
         firebase.auth().createUserWithEmailAndPassword(txtEmail.value, txtPassword.value)
         .then((success)=>{
             alert('Success create account with email');
-            this.ProcessAfterLogin();
+            //this.ProcessAfterLogin();
             txtEmail.value = "";
             txtPassword.value = "";
+            this.props.FinishTask();
         })
-        .catch(function(error) {
+        .catch((error) => {
             txtEmail.value = "";
             txtPassword.value = "";
             alert("Error create account :" + error.message);
+            this.props.FinishTask();
         });
 
     }

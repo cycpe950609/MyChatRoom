@@ -87,6 +87,7 @@ export class NewUserPage extends React.Component
                     if (snapshot.exists()){
                         alert('ID already exist. Please change a new one');
                         reject('IDExist');
+                        //TODO : Check if this function is correct after add Cloud Function to add CommonID into users_name_with_id
                     }
                     else
                     {
