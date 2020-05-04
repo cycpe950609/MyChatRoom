@@ -14,7 +14,8 @@ export class Sidebar extends React.Component
         
         this.state = {
             ifShowFriends:true ,// false to show Chatroom
-            ifAddNewObject:false
+            ifAddNewObject:false,
+            user_name : null
         }   
         this.FriendsList = [];
         this.GroupsList = [];
@@ -32,7 +33,7 @@ export class Sidebar extends React.Component
             let uid = user.uid;
             //Get Unchecked Friends
             this.FriendsList.push(this.createDivider('New Friends'));
-            let unFrdRef = firebase.database().ref('user_data/invited_friend');
+            let unFrdRef = firebase.database().ref('user_data/'+ uid + '/invited_friend');
             unFrdRef.on('child_added',(data)=>{
                 let childData = data.val();
                 this.FriendsList.push(this.createFriendsListItem(childData.Name,childData.Uid));
@@ -46,7 +47,7 @@ export class Sidebar extends React.Component
         else
         {
             alert('Something Error ! Please re-sign in !');
-            location.reload();
+            //location.reload();
         }
 
         
@@ -61,7 +62,7 @@ export class Sidebar extends React.Component
         
         //{ this.state.ifShowFriends ? this.state.MyFriends : this.state.MyChatRoom }
         return (
-            console.log(this.state.ifAddNewObject),
+            //console.log(this.state.ifAddNewObject),
             <div className="SidebarDiv">
                 { this.state.ifAddNewObject ? this.RenderNewObjectDialog() : this.RenderList() }
             </div>   

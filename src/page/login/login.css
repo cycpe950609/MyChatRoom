@@ -1,5 +1,7 @@
 .LoginPageDiv{
     padding: 15px;
+    height: 400px;
+    width: 225px;
 }
 .LoginButton{
     margin-top: 10px;
@@ -11,5 +13,13 @@
     width: 100%;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.center_title_image
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
 

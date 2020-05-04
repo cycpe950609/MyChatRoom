@@ -1,7 +1,7 @@
 {
   "rules": {
     "users_name_with_id":{
-      ".read" : false,
+      ".read" : "auth != null",
       ".write": false
     },
     "chatroom":{

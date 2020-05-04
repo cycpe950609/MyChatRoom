@@ -10,6 +10,23 @@ export class Header extends React.Component
         super(props);
         this.SignOutProcess = this.SignOutProcess.bind(this);
         this.btnIcon_onClick = this.btnIcon_onClick.bind(this);
+
+        this.state = {
+            user_name : null
+        }
+
+
+        
+    }
+    componentDidMount()
+    {
+        let uid = firebase.auth().currentUser.uid;
+        let setRef = firebase.database().ref('user_data/'+ uid + '/setting');
+        setRef.once('child_added',(data)=>{
+            this.setState({
+                user_name : data.val().user_name
+            });
+        })
     }
 
     render()
@@ -18,7 +35,7 @@ export class Header extends React.Component
             <div className="header">
                 <nav className="navbar mt-auto navbar-light bg-light">
                     <div className="chatroom_header_icon"  alt="" onClick={this.btnIcon_onClick}/>
-                    <span className="mx-auto my-0" id="chatroom_header_title">User's Name</span>
+                    <span className="mx-auto my-0" id="chatroom_header_title">{ this.state.user_name }</span>
                     <ul className="nav navbar-nav navbar-right">
                         <li><button className="btn btn-dark" onClick={this.SignOutProcess}><img src="./img/logout.png" width="30" height="30" alt=""/></button></li>
                     </ul>  
