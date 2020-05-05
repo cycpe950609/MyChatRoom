@@ -3,12 +3,12 @@ import { Application } from './Application.js'
 
 function StartTask()
 {
-    //console.log('Show Loading');
+    console.log('Show Loading');
     document.getElementById('LoadingPage').style.display = 'flex';
 }
 function FinishTask()
 {
-    //console.log('Close Loading');
+    console.log('Close Loading');
     document.getElementById('LoadingPage').style.display = 'none';
 }
 //Init GUI

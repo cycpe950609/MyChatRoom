@@ -23,18 +23,8 @@
     "user_data":{
       "$uid":{
         "setting":{
-          "user_name":{
             ".read" : "auth != null",
             ".write": "$uid === auth.uid"
-          },
-          "user_email":{
-            ".read" : "$uid === auth.uid",
-            ".write": "$uid === auth.uid"
-          },
-          "common_id":{
-            ".read" : "auth != null",
-            ".write": "$uid === auth.uid"
-          }
         },
   
         "friends":{

@@ -65,6 +65,7 @@ export class LoginPage extends React.Component{
         let txtPassword = document.getElementById('inputPassword');
 
         this.props.StartTask();
+        console.log('Start1');
         firebase.auth().signInWithEmailAndPassword(txtEmail.value, txtPassword.value)
         .then( (success) => {
             //alert('Success Login with email');
@@ -81,7 +82,7 @@ export class LoginPage extends React.Component{
 
     btnGoogleSignIn_onClick(e){
         this.props.StartTask();
-
+        console.log('Start2');
         let gle_provider = new firebase.auth.GoogleAuthProvider();
         //console.log(this);
         firebase.auth().signInWithPopup(gle_provider)
@@ -98,7 +99,7 @@ export class LoginPage extends React.Component{
 
     btnFacebookSignIn_onClick(e){
         this.props.StartTask();
-
+        console.log('Start3');
         let fb_provider = new firebase.auth.FacebookAuthProvider();
         firebase.auth().signInWithPopup(fb_provider)
         .then((result) => {
@@ -113,7 +114,7 @@ export class LoginPage extends React.Component{
 
     btnNewAccount_onClick(e){
         this.props.StartTask();
-
+        console.log('Start4');
         let txtEmail = document.getElementById('inputEmail');
         let txtPassword = document.getElementById('inputPassword');
 
@@ -163,14 +164,15 @@ export class LoginPage extends React.Component{
     CheckifUserExist(uid)
     {
         return new Promise((success,failure)=>{
-            firebase.database().ref('user_data/' + uid + '/setting').once("value", snapshot => {
+            console.log('CheckifUserExist');
+            firebase.database().ref('user_data/' + uid + '/setting/user_name').once("value", snapshot => {
                 if (snapshot.exists()){
-                   //console.log("exists!");
+                   console.log("exists!");
                    success(snapshot);
                 }
                 else
                 {
-                    //console.log('Doesnt Exist');
+                    console.log('Doesnt Exist');
                     success(null);
                 }
             });

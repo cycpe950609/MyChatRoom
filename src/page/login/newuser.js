@@ -33,6 +33,7 @@ export class NewUserPage extends React.Component
     SubmitHandle(e)
     {
         this.props.StartTask();
+        console.log('Testing...');
         let name = document.getElementById('user_name');
         let id = document.getElementById('user_id');
 
@@ -98,13 +99,13 @@ export class NewUserPage extends React.Component
                         console.log('Email : ' + this.props.Email);
                         console.log('ID : ' + id.value);
 
-                        let usdata = firebase.database().ref('user_data/' + userId + '/setting').push({
-                            user_name   : name.value,
-                            user_email  : this.props.Email,
-                            common_id   : id.value
+                        let usdata = firebase.database().ref('user_data/' + userId + '/setting/').set({
+                            user_name  : name.value ,
+                            user_email : this.props.Email ,
+                            common_id  : id.value 
                         });
 
-                        let iddata = firebase.database().ref('users_name_with_id/' + userId + '/').push({
+                        let iddata = firebase.database().ref('users_name_with_id/' + userId + '/').set({
                             user_id     : userId,
                             common_id   : id.value
                         });
