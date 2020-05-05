@@ -98,14 +98,24 @@ export class NewUserPage extends React.Component
                         console.log('Email : ' + this.props.Email);
                         console.log('ID : ' + id.value);
 
-                        firebase.database().ref('user_data/' + userId + '/setting').push({
+                        let usdata = firebase.database().ref('user_data/' + userId + '/setting').push({
                             user_name   : name.value,
                             user_email  : this.props.Email,
                             common_id   : id.value
-                        }).then((e)=>{
-                            console.log('Success Add User');
-                            resolve('SuccessAddUser');
                         });
+
+                        let iddata = firebase.database().ref('users_name_with_id/' + userId + '/').push({
+                            user_id     : userId,
+                            common_id   : id.value
+                        });
+                        Promise.all([usdata, iddata])
+                        .then((result)=>{
+
+                            resolve('SuccessAddUser');
+                        })
+                        .catch((error)=>{
+                            reject(error);
+                        })
                 }
             }).catch(function(error) {
                 console.error(error);});

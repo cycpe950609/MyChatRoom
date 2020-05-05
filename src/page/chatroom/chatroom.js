@@ -38,7 +38,7 @@ export class ChatRoom extends React.Component
                 </ul>
                 <div className="ChatRoomText mt-auto input-group mb-3">
                     <input type="text" className="form-control"/>
-                    <div className="input-group-append">
+                    <div className="input-group-append btnSend">
                         <button className="btn btn-dark" type="button">
                             <img src="./img/send_message.png" width="30" height="30" alt=""/>
                         </button>

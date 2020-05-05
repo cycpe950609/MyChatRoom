@@ -46,7 +46,8 @@ export class Header extends React.Component
 
     btnIcon_onClick(e)
     {
-        alert('btnIcon Click');
+        //console.log('btnIcon Click');
+        this.props.TriggerSidebar(e);
     }
 
     btnLogout_onClick(e)

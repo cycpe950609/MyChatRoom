@@ -20,7 +20,9 @@
     padding: 5px;
 }
 
-
+.btnSend{
+    z-index: auto !important;
+}
 
 .ChatRoomListItem{
     margin-left: 15px;

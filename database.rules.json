@@ -1,13 +1,22 @@
 {
   "rules": {
     "users_name_with_id":{
-      ".read" : "auth != null",
-      ".write": false
+      "$uid":{
+        ".read" : "auth != null",
+        ".write": "$uid === auth.uid"
+      },
+      ".read" : "auth != null"
     },
     "chatroom":{
       "$gp_id":{
-        ".read" : false,
-        ".write": false
+        "users":{
+          ".read" : false,
+          ".write": false
+        },
+        "chatroom":{
+          ".read" : false,
+          ".write": false
+        }
       }
     },
 
