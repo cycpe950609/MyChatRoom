@@ -34,8 +34,8 @@ export class Drawer extends React.Component
 
     render()
     {
-        console.log('ifShowSidebar : ' + this.state.ifShowSidebar);
-        console.log('ifShowContent : ' + this.state.ifShowContent);
+        //console.log('ifShowSidebar : ' + this.state.ifShowSidebar);
+        //console.log('ifShowContent : ' + this.state.ifShowContent);
         //TODO : pass TriggerSidebar into header
         //no-padding-x : set in index.css
 
@@ -89,7 +89,7 @@ export class Drawer extends React.Component
     }
     TriggerSidebar(e)
     {
-        console.log('TriggerSidebar');
+        //console.log('TriggerSidebar');
         this.setState((prevState) => ({
             ifShowSidebar: !prevState.ifShowSidebar,
             ifShowContent: true

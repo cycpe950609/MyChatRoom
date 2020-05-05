@@ -39,7 +39,7 @@ export class NewFriendForm extends React.Component
             .once('value')
             .then( 
                 (snapshot) => {
-                    console.log('Get result of ID checking');
+                    //console.log('Get result of ID checking');
 
                     
                     

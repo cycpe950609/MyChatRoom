@@ -36,6 +36,7 @@ export class Sidebar extends React.Component
             let unFrdRef = firebase.database().ref('user_data/'+ uid + '/invited_friend');
             unFrdRef.on('child_added',(data)=>{
                 let childData = data.val();
+                console.log(childData);
                 this.FriendsList.push(this.createFriendsListItem(childData.Name,childData.Uid));
             });
             
