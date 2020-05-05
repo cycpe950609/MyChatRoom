@@ -20,13 +20,18 @@ export class Header extends React.Component
     }
     componentDidMount()
     {
-        // let uid = firebase.auth().currentUser.uid;
-        // let setRef = firebase.database().ref('user_data/'+ uid + '/setting');
-        // setRef.once('child_added',(data)=>{
-        //     this.setState({
-        //         user_name : data.val().user_name
-        //     });
-        // })
+        let uid = firebase.auth().currentUser.uid;
+        let setRef = firebase.database().ref('user_data/'+ uid + '/setting');
+        setRef.once('value',(data)=>{
+            //console.log(data.val().user_name);
+            this.setState({user_name : data.val().user_name });
+            // data.forEach( (childSnapshot) => {
+            //     var value = childSnapshot.val();
+            //     console.log('User Name : ' + value);
+            //     this.setState({user_name : value });
+            // });
+        });
+
     }
 
     render()
