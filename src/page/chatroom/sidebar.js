@@ -11,7 +11,7 @@ export class Sidebar extends React.Component
     constructor(props)
     {
         super(props);
-        
+        this.props.StartTask();
         this.state = {
             ifShowFriends:true ,// false to show Chatroom
             ifAddNewObject:false,
@@ -19,47 +19,100 @@ export class Sidebar extends React.Component
         }   
         this.FriendsList = [];
         this.GroupsList = [];
+
+        this.getFriendID()
+        .then((success1)=>{
+            this.getFriendName(success1)
+            .then((success2)=>{
+                this.FriendsList.push( this.createFriendsListItem(success2,success2) );
+                //console.log('SuccessAddList');
+                this.props.FinishTask();
+                this.forceUpdate();
+            })
+            .catch((error)=> console.error(error));
+        })
+        .catch((error)=> console.error(error));;
+    }
+
+    getFriendID()
+    {
+
+        return new Promise((resolve,reject)=>{
+            this.props.StartTask();
+            //TODO : Load List of Friends , Groups
+    
+            let user = firebase.auth().currentUser;
+            //console.log('Get login user in Sidebar')
+            if(user)
+            {
+    
+    
+                let uid = user.uid;
+                //Get Unchecked Friends
+                this.FriendsList.push(this.createDivider('New Friends'));
+                //this.FriendsList.push( this.createFriendsListItem('Testing',123456) );
+                let unFrdRef = firebase.database().ref('user_data/'+ uid + '/invited_friend');
+                unFrdRef.on('child_added', (data) => {
+                    var childData = data.val();
+
+                    resolve(childData.user_id);
+                    
+                    
+                });
+            
+    
+    
+                // let unFrdRef = firebase.database().ref('user_data/'+ uid + '/invited_friend');
+                // unFrdRef.on('value',(data)=>{
+                //     let childData = data.val();
+    
+                //     //let usr_name = this.getUserName(childData.user_id);
+                //     this.FriendsList.push( this.createFriendsListItem('Test',childData.user_id) );
+                // });
+                
+                //Get Frineds
+                
+                //Get Groups
+            }
+            else
+            {
+                alert('Something Error ! Please re-sign in !');
+                //location.reload();
+            } 
+            //this.forceUpdate();
+            this.props.FinishTask();
+        });
+    }
+
+    getFriendName(UID)
+    {
+        return new Promise((resolve,reject)=>{
+            let frdNameRef = firebase.database().ref('user_data/'+ UID + '/setting');
+            //console.log(frdNameRef.child('user_name'));
+
+            frdNameRef.child('user_name')
+            .on('value',(frddata)=>{
+                //console.log(frddata.val());
+                resolve(frddata.val());
+                // this.FriendsList.push( this.createFriendsListItem(frddata.val(),frddata.val()) );
+                // console.log('SuccessAddList');
+                // resolve('SuccessAddList');
+            });
+        });
     }
 
     componentDidMount()
     {
-        this.props.StartTask();
-        //TODO : Load List of Friends , Groups
-
-        let user = firebase.auth().currentUser;
-        //console.log('Get login user in Sidebar')
-        if(user)
-        {
-            let uid = user.uid;
-            //Get Unchecked Friends
-            this.FriendsList.push(this.createDivider('New Friends'));
-            let unFrdRef = firebase.database().ref('user_data/'+ uid + '/invited_friend');
-            unFrdRef.on('child_added',(data)=>{
-                let childData = data.val();
-                console.log(childData);
-                this.FriendsList.push(this.createFriendsListItem(childData.Name,childData.Uid));
-            });
-            
-            //Get Frineds
-            
-            //Get Groups
-        
-        }
-        else
-        {
-            alert('Something Error ! Please re-sign in !');
-            //location.reload();
-        }
-
-        
-        
-        this.forceUpdate();
-        this.props.FinishTask();
+        // console.log('Did mount');
+        // this.forceUpdate();
     }
+    
     //var MyFriends = [<span>My Friends is empty</span>];
     //var MyChatRoom = [<span>My ChatRooms is empty</span>];
     render()
     {
+        console.log('Sidebar Render');
+        console.log(this.FriendsList.length);
         
         //{ this.state.ifShowFriends ? this.state.MyFriends : this.state.MyChatRoom }
         return (
