@@ -36,3 +36,13 @@
     border-color: '#343a40';
     border-radius: 50%;
 }
+
+.CreateEnterDiv{
+    width: 300px;
+    height: 400px;
+}
+.GroupInput{
+    width: 280px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

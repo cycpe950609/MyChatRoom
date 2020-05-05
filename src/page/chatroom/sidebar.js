@@ -4,8 +4,115 @@ import '../../img/NewFriend.png'
 import '../../img/NewGroup.png'
 import { Dialog } from '../../control/Dialog/Dialog';
 import { NewFriendForm } from './AddNewFriendForm.js'
+import  { PinInput } from 'react-pin-input'
 
 
+export class Sidebar extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+
+        this.state = {
+            ifCreateGroup : false,
+            ifCreateEnter : false
+        };
+
+
+        this.GroupsList = [];
+        this.GroupsList.push(this.createDivider('My Group'));
+
+
+
+        this.btnEnterGroup = this.btnEnterGroup.bind(this);
+        this.btnCreateGroup = this.btnCreateGroup.bind(this);
+    }
+    render()
+    {
+        return(
+            <div className="SidebarDiv">
+                { this.state.ifCreateEnter ? this.RenderCreateEnterGroup() : this.RenderList()}
+            </div>
+        );
+    }
+
+    createDivider(Title)
+    {
+        return (<span>{Title}</span>);
+    }
+
+    RenderList()
+    {
+        return (
+        <div className="SidebarDiv">
+            <ul className="list-group SidebarList">
+                { 
+                        this.GroupsList.map((item) =>(
+                            <li className="list-group-item">{item}</li>))
+                }
+            </ul>
+            <ul className="SiderbarTab nav  mt-auto nav-light nav-tabs nav-fill">
+                <li className="nav-item"  >
+                    <label>Create a new one </label>
+                    <button type="button" className="btn btn-dark btnSidebarNew" 
+                        style={{ backgroundImage : "url(./img/NewGroup.png)" }} onClick={this.btnCreateGroup}
+                    >+</button>
+                    <label>Enter a exist one </label>
+                    <button type="button" className="btn btn-dark btnSidebarNew" onClick={this.btnEnterGroup}
+                        style={{ backgroundImage : "url(./img/NewGroup.png)" }}
+                    >+</button>
+                </li>
+            </ul>
+        </div>
+
+        );
+    }
+    RenderCreateEnterGroup()
+    {
+        return(
+            <Dialog BackgroundColor='whitesmoke' title={this.state.ifCreateGroup ? 'Create a new Group' : 'Enter a exist Group'}>
+                <div className="CreateEnterDiv">
+                    <img src="./img/chatroom.png" className="center_title_image"/>
+                    <input type="text" id="inputname"  className="GroupInput" placeholder="Name of ChatRoom" required />
+                    <input  type="password"     id="inputPassword"      className="GroupInput"  placeholder="Password of ChatRoom" required />
+                    <div class="btn-group btn-block" style={{ marginTop : '10px' }}>
+                        <button className="btn btn-danger" onClick={(e)=> { this.FinishCancelNewFriends() } }>Cancel</button>
+                        <button className="btn btn-primary">{this.state.ifCreateGroup ? 'Create' : 'Enter'}</button>
+                    </div>
+                </div>
+                
+            </Dialog>
+        )
+    }
+
+    FinishCancelNewFriends()
+    {
+        this.setState({
+            ifCreateEnter : false
+        })
+    }
+
+    btnCreateGroup(e)
+    {
+        this.setState({
+            ifCreateGroup : true,
+            ifCreateEnter : true
+        })
+    }
+    btnEnterGroup(e)
+    {
+        this.setState({
+            ifCreateGroup : false,
+            ifCreateEnter : true
+        })
+    }
+}
+
+
+
+
+
+/*
 export class Sidebar extends React.Component
 {
     constructor(props)
@@ -187,3 +294,4 @@ export class Sidebar extends React.Component
     }
 
 }
+*/
