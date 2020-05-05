@@ -23,8 +23,18 @@
     "user_data":{
       "$uid":{
         "setting":{
-          ".read" : "$uid === auth.uid",
-          ".write": "$uid === auth.uid"
+          "user_name":{
+            ".read" : "auth != null",
+            ".write": "$uid === auth.uid"
+          },
+          "user_email":{
+            ".read" : "$uid === auth.uid",
+            ".write": "$uid === auth.uid"
+          },
+          "common_id":{
+            ".read" : "auth != null",
+            ".write": "$uid === auth.uid"
+          }
         },
   
         "friends":{
@@ -37,7 +47,7 @@
         },
         "invited_friend":{
           ".read" : "$uid === auth.uid",
-          ".write": false
+          ".write": "auth != null"
         },
   
         
