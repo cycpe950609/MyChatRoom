@@ -29,14 +29,21 @@ export class Sidebar extends React.Component
         this.CreateEnterHandle = this.CreateEnterHandle.bind(this);
         this.Item_onClick = this.Item_onClick.bind(this);
 
+        
+    }
+
+    componentDidMount()
+    {
         //Get all group
         firebase.database().ref('user_data').child(firebase.auth().currentUser.uid).child('chatroom_group')
         .on('child_added',(data)=>{
             //console.log(data.val().group_id);
             let gp_id = data.val().group_id;
             this.GroupsList.push(this.createGroupsListItem('Group : ' + gp_id,gp_id));
-        })
+            this.forceUpdate();
+        });
     }
+
     render()
     {
         return(
@@ -48,12 +55,12 @@ export class Sidebar extends React.Component
 
     createDivider(Title)
     {
-        return (<span>{Title}</span>);
+        return (<span className="p-2">{Title}</span>);
     }
-    createGroupsListItem(Name , id)
+    createGroupsListItem(Name , MyID)
     {
         return (
-            <div id={id} onClick={(e) => this.Item_onClick( {id} )}>
+            <div id={ MyID } onClick={(e) => this.Item_onClick( { MyID } )} className="p-2">
                 <img className="ListItemAvatar" src="./img/avatar.png" width="50" height="50" alt=""/>
                 <span className="FriendsListItem"> { Name } </span>
             </div>
@@ -61,7 +68,12 @@ export class Sidebar extends React.Component
     }
     Item_onClick(ListItem)
     {
-        
+        console.log(ListItem.MyID);
+        this.props.ChangeChatRoomID(ListItem.MyID);
+        // let btn = document.getElementById('btn_chatroom_id');
+        // console.log(btn);
+        // btn.innerText = ListItem.id;
+        // btn.click();
     }
     RenderList()
     {
@@ -70,7 +82,7 @@ export class Sidebar extends React.Component
             <ul className="list-group SidebarList">
                 { 
                         this.GroupsList.map((item) =>(
-                            <li className="list-group-item">{item}</li>))
+                            <li className="list-group-item p-0">{item}</li>))
                 }
             </ul>
             <ul className="SiderbarTab nav  mt-auto nav-light nav-tabs nav-fill">
@@ -135,7 +147,7 @@ export class Sidebar extends React.Component
                 }
                 else
                 {
-                    firebase.database().ref('chatroom').child(inname.value).child('users').push({
+                    firebase.database().ref('chatroom').child(inname.value).child('users').child(firebase.auth().currentUser.uid).set({
                             user_id : firebase.auth().currentUser.uid  
                         }
                         ,(error) =>{

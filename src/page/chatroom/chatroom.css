@@ -35,3 +35,7 @@
     border-color: '#343a40';
     border-radius: 50%;
 }
+
+.btn_chatroom_id{
+    display: none;
+}

@@ -10,7 +10,9 @@ export class Drawer extends React.Component
             user_name : "User Email",
             ifShowSidebar: true,
             ifShowContent: true,
-            ifLessThan800: false
+            ifLessThan800: false,
+            chatroom_id : null,
+            DataGetter : null
         };
 
         //this.ResizeEvent(null);
@@ -18,6 +20,7 @@ export class Drawer extends React.Component
         // this.onAnimationStart = this.onAnimationStart.bind(this); 
         // this.onAnimationEnd = this.onAnimationEnd.bind(this);
         this.TriggerSidebar = this.TriggerSidebar.bind(this);
+        this.ChangeChatRoomID = this.ChangeChatRoomID.bind(this);
     }
 
     componentDidMount() 
@@ -42,7 +45,8 @@ export class Drawer extends React.Component
             
             
         let new_header = React.cloneElement(this.props.Header, { TriggerSidebar :  this.TriggerSidebar } );
-        
+        let new_sidebar = React.cloneElement(this.props.Sidebar , { ChangeChatRoomID : this.ChangeChatRoomID });
+        let new_content = React.cloneElement(this.props.children , { ChatRoomID : this.state.chatroom_id , key : this.state.chatroom_id })
         return(
             <div className="no-padding-x display-table DrawerBody">
                 <div className="no-gutters no-padding-x DrawerHead">
@@ -55,18 +59,18 @@ export class Drawer extends React.Component
                     <div className="DrawerContent">
                         {this.props.children}
                     </div> */}
-                    { /*當螢幕寬度小於800px時，放前面才會顯示在下層*/
+                    { 
+                     /*當螢幕寬度小於800px時，放前面才會顯示在下層*/
                         this.state.ifLessThan800 ? 
-                        <div className="DrawerContent">
-                            {this.props.children}
-                        </div>
-                        :
-                        null
+                            <div className="DrawerContent">
+                                {new_content}
+                            </div>
+                        : null
                     }
                     { this.state.ifShowSidebar ? 
                         <div className="DrawerSidebarBg">
                             <div className="DrawerSidebar" >
-                                {this.props.Sidebar}
+                                {new_sidebar}
                             </div>
                             <div className="SidebarCloser" onClick={this.TriggerSidebar}>
                             </div>
@@ -75,18 +79,24 @@ export class Drawer extends React.Component
                         null             
                     }
                     { /*當螢幕寬度大於800px時，放後面才會顯示在右邊*/
-                        !this.state.ifLessThan800 ? 
+                     /*當螢幕寬度小於800px時，放前面才會顯示在下層*/
+                     !this.state.ifLessThan800 ? 
                         <div className="DrawerContent">
-                            {this.props.children}
+                            {new_content}
                         </div>
-                        :
-                        null
+                    : null
                     }
-                    
+                   
                 </div>
             </div>
         );
     }
+    ChangeChatRoomID(id)
+    {
+        this.setState({ chatroom_id : id });
+        //console.log(id);
+    }
+
     TriggerSidebar(e)
     {
         //console.log('TriggerSidebar');
