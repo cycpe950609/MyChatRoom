@@ -55,7 +55,7 @@ export class ChatRoom extends React.Component
         
         //console.log('ChatRoom ID : ' + this.props.ChatRoomID);
 
-        console.log('chatroom/' + this.props.ChatRoomID + '/chatroom');
+        //console.log('chatroom/' + this.props.ChatRoomID + '/chatroom');
         // if(this.state.PostChatRoomID != this.state.ChatRoomID)
         // {
         this.ChatRoomList = [];
@@ -66,10 +66,11 @@ export class ChatRoom extends React.Component
             
             second_count += 1;
             if (second_count > first_count) {
-                console.log(data.val());
+                //console.log(data.val());
                 this.ChatRoomList[this.ChatRoomList.length] = this.createChatRoomListItem(data.val().user_name + ' Say : ' + data.val().user_commit , null);
                 first_count = this.ChatRoomList.length;
                 this.forceUpdate();
+                this.ProcessNotisfication(data.val().user_name,data.val().user_commit );
             }
         });
         // }
@@ -78,13 +79,13 @@ export class ChatRoom extends React.Component
         this.props.FinishTask();
 
     }
-    componentWillUpdate()
-    {
+    // componentWillUpdate()
+    // {
         
-        // console.log(this.props.ChatRoomID);
-        //this.setState({ifUpdated : true});
+    //     // console.log(this.props.ChatRoomID);
+    //     //this.setState({ifUpdated : true});
         
-    }
+    // }
     // createChatRoomListItem(name , text)
     // {
     //     return (
@@ -115,6 +116,11 @@ export class ChatRoom extends React.Component
         );
     }
 
+    // strip(html){
+    //     var doc = new DOMParser().parseFromString(html, 'text/html');
+    //     return doc.body.textContent;
+    //  }
+
     SendText()
     {
         let txt = document.getElementById('textInput');
@@ -122,10 +128,15 @@ export class ChatRoom extends React.Component
         if(txt.value == "") return;
         //console.log(txt.value);
 
+        //console.log(this.strip(txt.value));
+
         firebase.database().ref('chatroom').child(this.props.ChatRoomID).child('chatroom').push({
             user_name : this.state.user_name,
             user_commit : txt.value
         });
+
+
+
 
         txt.value = "";
     }
@@ -138,5 +149,57 @@ export class ChatRoom extends React.Component
             </div>
         );
     }
+    NotifyMsg(Who , What) {
+        var option = {
+            tag: 'Notification',
+            body: What,
+            data: 'Information',
+            icon: '' //可以自訂ICON
+        }
+
+        var n = new Notification("ChatRoom : " + Who, option);
+        setTimeout(n.close.bind(n), 5000);
+        console.log(n.data);
+       
+        n.onclick = function (event) {
+            event.preventDefault(); // prevent the browser from focusing the Notification's tab
+            window.open('https://chatroomapplication-7419f.web.app', '_blank');
+        }
+    }
+    //Notisfication
+    ProcessNotisfication(Who , What){
+
+        if(document.hasFocus() == false || document.visibilityState != 'visible')
+        {
+            // If the user agreed to get notified
+            // Let's try to send ten notifications
+            if(window.Notification && Notification.permission === "granted") 
+            {
+                this.NotifyMsg(Who , What);                
+            }
+            // If the user hasn't told if he wants to be notified or not
+            // Note: because of Chrome, we are not sure the permission property
+            // is set, therefore it's unsafe to check for the "default" value.
+            else if (window.Notification && Notification.permission !== "denied") {
+                Notification.requestPermission(function (status) {
+                    if (status === "granted") 
+                    {
+                        this.NotifyMsg(Who , What);
+                    }
+                        // Otherwise, we can fallback to a regular modal alert
+                    else 
+                    {
+                        alert(Who + ' say : ' + What);
+                    }
+                });
+            }
+                // If the user refuses to get notified
+            else {
+                // We can fallback to a regular modal alert
+            alert(Who + ' say : ' + What);
+            }
+        }
+        
+    };
 
 }
