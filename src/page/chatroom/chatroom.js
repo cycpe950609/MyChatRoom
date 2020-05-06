@@ -69,8 +69,9 @@ export class ChatRoom extends React.Component
                 //console.log(data.val());
                 this.ChatRoomList[this.ChatRoomList.length] = this.createChatRoomListItem(data.val().user_name + ' Say : ' + data.val().user_commit , null);
                 first_count = this.ChatRoomList.length;
-                this.forceUpdate();
                 this.ProcessNotisfication(data.val().user_name,data.val().user_commit );
+                this.forceUpdate();
+                
             }
         });
         // }

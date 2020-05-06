@@ -174,22 +174,38 @@ export class Sidebar extends React.Component
             //Enter
             this.CheckIfGroupIDExist(inname.value)
             .then((success)=>{
+                
                 if(success == 'IDEXIST')
                 {
-                    firebase.database().ref('chatroom').child(inname.value).child('users').push({
-                        user_id : firebase.auth().currentUser.uid  
-                    }
-                    ,(error) =>{
-                        if(error)
-                            alert('Enter Error : ' + error.message);
-                    });
-                    firebase.database().ref('user_data').child(firebase.auth().currentUser.uid).child('chatroom_group').push({
-                        group_id : inname.value
-                    },(error) =>{
-                        if(error)
-                            alert('Enter Error : ' + error.message);
+                    this.CheckifYourAlreadyInTheGroup(inname.value)
+                    .then((result)=>{
+                        console.log(result);
+                        if(result == 'NOTEXIST')
+                        {
+                            //Upload your id to the group
+                            firebase.database().ref('chatroom').child(inname.value).child('users').child(firebase.auth().currentUser.uid).set({
+                                user_id : firebase.auth().currentUser.uid  
+                            }
+                            ,(err) =>{
+                                if(err)
+                                    alert('Enter Error : ' + err.message);
+                            });
+                            //Set group name in your user_data
+                            firebase.database().ref('user_data').child(firebase.auth().currentUser.uid).child('chatroom_group').push({
+                                group_id : inname.value
+                            },(err) =>{
+                                if(err)
+                                    alert('Enter Error : ' + err.message);
+                                else
+                                    this.setState({ifCreateEnter : false});
+                            })
+                        }
                         else
+                        {
+                            alert('Already in the CharRoom');
                             this.setState({ifCreateEnter : false});
+                        }
+                        
                     })
                 }
                 else
@@ -201,6 +217,25 @@ export class Sidebar extends React.Component
                 console.error(error);
             });
         }
+    }
+
+    CheckifYourAlreadyInTheGroup(Name)
+    {
+        return new Promise((resolve,reject)=>{
+            firebase.database().ref('chatroom').child(Name).child('users')
+            .once('value')
+            .then( 
+                (snapshot)=>{
+                    console.log(snapshot.hasChild(firebase.auth().currentUser.uid));
+                if(snapshot.exists() && snapshot.hasChild(firebase.auth().currentUser.uid))
+                    resolve('ALEARDYEXIST');
+                else
+                    resolve('NOTEXIST');
+            })
+            .catch((error)=>{
+                reject(error);
+            })
+        })
     }
 
     CheckIfGroupIDExist(Name)
