@@ -10,14 +10,15 @@
     "chatroom":{
       "$gp_id":{
         "users":{
-          ".read" : false,
-          ".write": false
+          ".read" : "auth != null",
+          ".write": "auth != null"
         },
         "chatroom":{
-          ".read" : false,
-          ".write": false
+          ".read" : "root.child('chatroom').child($gp_id).child('users').child(auth.uid).exists()",
+          ".write": "root.child('chatroom').child($gp_id).child('users').child(auth.uid).exists()"
         }
-      }
+      },
+      ".read" : "auth != null"
     },
 
     "user_data":{

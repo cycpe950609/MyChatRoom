@@ -26,6 +26,16 @@ export class Sidebar extends React.Component
 
         this.btnEnterGroup = this.btnEnterGroup.bind(this);
         this.btnCreateGroup = this.btnCreateGroup.bind(this);
+        this.CreateEnterHandle = this.CreateEnterHandle.bind(this);
+        this.Item_onClick = this.Item_onClick.bind(this);
+
+        //Get all group
+        firebase.database().ref('user_data').child(firebase.auth().currentUser.uid).child('chatroom_group')
+        .on('child_added',(data)=>{
+            //console.log(data.val().group_id);
+            let gp_id = data.val().group_id;
+            this.GroupsList.push(this.createGroupsListItem('Group : ' + gp_id,gp_id));
+        })
     }
     render()
     {
@@ -40,7 +50,19 @@ export class Sidebar extends React.Component
     {
         return (<span>{Title}</span>);
     }
-
+    createGroupsListItem(Name , id)
+    {
+        return (
+            <div id={id} onClick={(e) => this.Item_onClick( {id} )}>
+                <img className="ListItemAvatar" src="./img/avatar.png" width="50" height="50" alt=""/>
+                <span className="FriendsListItem"> { Name } </span>
+            </div>
+        );
+    }
+    Item_onClick(ListItem)
+    {
+        
+    }
     RenderList()
     {
         return (
@@ -73,11 +95,11 @@ export class Sidebar extends React.Component
             <Dialog BackgroundColor='whitesmoke' title={this.state.ifCreateGroup ? 'Create a new Group' : 'Enter a exist Group'}>
                 <div className="CreateEnterDiv">
                     <img src="./img/chatroom.png" className="center_title_image"/>
-                    <input type="text" id="inputname"  className="GroupInput" placeholder="Name of ChatRoom" required />
-                    <input  type="password"     id="inputPassword"      className="GroupInput"  placeholder="Password of ChatRoom" required />
-                    <div class="btn-group btn-block" style={{ marginTop : '10px' }}>
+                    <input type="text" id="inputname"  className="GroupInput" placeholder="Name of ChatRoom" required id="inputName"/>
+                    {/* <input  type="password"     id="inputPassword"      className="GroupInput"  placeholder="Password of ChatRoom" required /> */}
+                    <div className="btn-group btn-block" style={{ marginTop : '10px' }}>
                         <button className="btn btn-danger" onClick={(e)=> { this.FinishCancelNewFriends() } }>Cancel</button>
-                        <button className="btn btn-primary">{this.state.ifCreateGroup ? 'Create' : 'Enter'}</button>
+                        <button className="btn btn-primary" onClick={this.CreateEnterHandle}>{this.state.ifCreateGroup ? 'Create' : 'Enter'}</button>
                     </div>
                 </div>
                 
@@ -89,6 +111,101 @@ export class Sidebar extends React.Component
     {
         this.setState({
             ifCreateEnter : false
+        })
+    }
+
+    CreateEnterHandle(e)
+    {
+        let inname = document.getElementById('inputName');
+        console.log('Inname : "' + inname.value.length + '"');
+        if(inname.value == "")
+        {
+            alert('Name is empty.');
+            return;
+        }
+            
+        if(this.state.ifCreateGroup)
+        {
+            //Create
+            this.CheckIfGroupIDExist(inname.value)
+            .then((success)=>{
+                if(success == 'IDEXIST')
+                {
+                    alert('Group already exist. Please change the name');
+                }
+                else
+                {
+                    firebase.database().ref('chatroom').child(inname.value).child('users').push({
+                            user_id : firebase.auth().currentUser.uid  
+                        }
+                        ,(error) =>{
+                            if(error)
+                                alert('Create Error : ' + error.message);
+                        }
+                    );
+                    firebase.database().ref('user_data').child(firebase.auth().currentUser.uid).child('chatroom_group').push({
+                        group_id : inname.value
+                    },(error) =>{
+                        if(error)
+                            alert('Create Error : ' + error.message);
+                        else
+                            this.setState({ifCreateEnter : false});
+                    })
+                }
+            })
+            .catch((error)=>{
+                console.error(error);
+            });
+        }
+        else
+        {
+            //Enter
+            this.CheckIfGroupIDExist(inname.value)
+            .then((success)=>{
+                if(success == 'IDEXIST')
+                {
+                    firebase.database().ref('chatroom').child(inname.value).child('users').push({
+                        user_id : firebase.auth().currentUser.uid  
+                    }
+                    ,(error) =>{
+                        if(error)
+                            alert('Enter Error : ' + error.message);
+                    });
+                    firebase.database().ref('user_data').child(firebase.auth().currentUser.uid).child('chatroom_group').push({
+                        group_id : inname.value
+                    },(error) =>{
+                        if(error)
+                            alert('Enter Error : ' + error.message);
+                        else
+                            this.setState({ifCreateEnter : false});
+                    })
+                }
+                else
+                {
+                    alert("ChatRoom doesn't Exist. Please check the name")
+                }
+            })
+            .catch((error)=>{
+                console.error(error);
+            });
+        }
+    }
+
+    CheckIfGroupIDExist(Name)
+    {
+        return new Promise((resolve,reject)=>{
+            firebase.database().ref('chatroom').child(Name).child('users')
+            .once('value')
+            .then( 
+                (snapshot)=>{
+                if(snapshot.exists())
+                    resolve('IDEXIST');
+                else
+                    resolve('IDNOTEXIST');
+            })
+            .catch((error)=>{
+                reject(error);
+            })
         })
     }
 
@@ -106,6 +223,8 @@ export class Sidebar extends React.Component
             ifCreateEnter : true
         })
     }
+
+   
 }
 
 
