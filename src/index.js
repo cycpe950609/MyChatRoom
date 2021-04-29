@@ -16,5 +16,17 @@ ReactDOM.render(<Application StartTask={StartTask} FinishTask={FinishTask} />,do
 
 //TODO : Refact class Application to another js/css
 
+window.addEventListener('load', function () {
+    //確認使用者是否允許跳窗，如果沒有，就跳窗取權限
+    if (window.Notification && Notification.permission !== "granted") {
+        Notification.requestPermission(function (status) {
+            if (Notification.permission !== status) {
+                Notification.permission = status;
+            }
+        });
+        
+    }
+});
+
 
 

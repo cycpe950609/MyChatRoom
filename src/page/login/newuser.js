@@ -12,7 +12,7 @@ export class NewUserPage extends React.Component
     }
     render()
     {
-        console.log('Render NewUserPage');
+        //console.log('Render NewUserPage');
         return (
             <div className="NewUserDiv p-0" >
                 <label className="new_user_title">Please fill your profile</label>
@@ -33,6 +33,7 @@ export class NewUserPage extends React.Component
     SubmitHandle(e)
     {
         this.props.StartTask();
+        //console.log('Testing...');
         let name = document.getElementById('user_name');
         let id = document.getElementById('user_id');
 
@@ -45,12 +46,12 @@ export class NewUserPage extends React.Component
         
 
         //Check if ID exist
-        console.log('Check if ID exist');
-        console.log(id.value);
+        //console.log('Check if ID exist');
+        //console.log(id.value);
         
         this.AddNewUserInDatabase()
         .then((success)=>{
-            console.log('Success Add User');
+            //console.log('Success Add User');
             this.props.FinishTask();
             this.props.SignInSuccess()
         })
@@ -58,7 +59,7 @@ export class NewUserPage extends React.Component
             alert('Error : ' + error.message);
         })
         
-        console.log('Finish Searching ');
+        //console.log('Finish Searching ');
 
         // this.CheckIfIDExist(id.value)
         // .then((success)=>{
@@ -69,7 +70,7 @@ export class NewUserPage extends React.Component
         //     alert('Error Add User : ' + error.message);
         // })
         event.preventDefault;
-        console.log('Finish SubmitHandle');
+        //console.log('Finish SubmitHandle');
     }
 
     AddNewUserInDatabase()
@@ -83,7 +84,7 @@ export class NewUserPage extends React.Component
             .once('value')
             .then( 
                 (snapshot) => {
-                    console.log('Get result of ID checking');
+                    //console.log('Get result of ID checking');
                     if (snapshot.exists()){
                         alert('ID already exist. Please change a new one');
                         reject('IDExist');
@@ -91,20 +92,20 @@ export class NewUserPage extends React.Component
                     }
                     else
                     {
-                        console.log('ID doesnt used');
+                        //console.log('ID doesnt used');
                         let userId = firebase.auth().currentUser.uid;
                         //Push data
-                        console.log('Name : ' + name.value);
-                        console.log('Email : ' + this.props.Email);
-                        console.log('ID : ' + id.value);
+                        //console.log('Name : ' + name.value);
+                        //console.log('Email : ' + this.props.Email);
+                        //console.log('ID : ' + id.value);
 
-                        let usdata = firebase.database().ref('user_data/' + userId + '/setting').push({
-                            user_name   : name.value,
-                            user_email  : this.props.Email,
-                            common_id   : id.value
+                        let usdata = firebase.database().ref('user_data/' + userId + '/setting/').set({
+                            user_name  : name.value ,
+                            user_email : this.props.Email ,
+                            common_id  : id.value 
                         });
 
-                        let iddata = firebase.database().ref('users_name_with_id/' + userId + '/').push({
+                        let iddata = firebase.database().ref('users_name_with_id/' + userId + '/').set({
                             user_id     : userId,
                             common_id   : id.value
                         });

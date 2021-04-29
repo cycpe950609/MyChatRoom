@@ -10,21 +10,25 @@
     "chatroom":{
       "$gp_id":{
         "users":{
-          ".read" : false,
-          ".write": false
+          "$uid":{
+            ".read" : "auth.uid != $uid",
+          	".write": "auth.uid != $uid"
+          },
+          ".write" : "auth != null"
         },
         "chatroom":{
-          ".read" : false,
-          ".write": false
+          ".read" : "root.child('chatroom').child($gp_id).child('users').hasChild(auth.uid)",
+          ".write": "root.child('chatroom').child($gp_id).child('users').hasChild(auth.uid)"
         }
-      }
+      },
+      ".read" : "auth != null"
     },
 
     "user_data":{
       "$uid":{
         "setting":{
-          ".read" : "$uid === auth.uid",
-          ".write": "$uid === auth.uid"
+            ".read" : "auth != null",
+            ".write": "$uid === auth.uid"
         },
   
         "friends":{
@@ -37,7 +41,7 @@
         },
         "invited_friend":{
           ".read" : "$uid === auth.uid",
-          ".write": false
+          ".write": "auth != null"
         },
   
         

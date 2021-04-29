@@ -32,7 +32,48 @@ export class NewFriendForm extends React.Component
     handleSubmit(event) 
     {
         //Check if exist
-        alert('A name was submitted: ' + this.state.name);
+        let friend_name = document.getElementById('new_friends_name').value;
+        firebase.database().ref('users_name_with_id')
+            .orderByChild('common_id')
+            .equalTo(friend_name)
+            .once('value')
+            .then( 
+                (snapshot) => {
+                    //console.log('Get result of ID checking');
+
+                    
+                    
+                    if (snapshot.exists()){
+                        let friend_uid;
+                        let userId = firebase.auth().currentUser.uid;
+                        snapshot.forEach((childSnapshot) => { friend_uid = childSnapshot.val().user_id; });
+                        //write touser's inviting
+                        let inviting = firebase.database().ref('user_data/' + userId + '/inviting_friend').push({
+                            user_id : friend_uid
+                        });
+
+                        //write to friend's invited
+                        let invited = firebase.database().ref('user_data/' + friend_uid + '/invited_friend').push({
+                            user_id : userId
+                        });
+
+                        Promise.all([inviting,invited])
+                        .then((result)=>{
+                            alert('Success Add Friend. Wait for respond');
+                            this.props.FinishCancelNewFriends();
+                        })
+                        .catch((error)=>{
+                            alert('Error : ' + error.message);
+                        })
+                        //TODO : Check if this function is correct after add Cloud Function to add CommonID into users_name_with_id
+                    }
+                    else
+                    {
+                        alert("Doesn't find the name , please enter correct name.");
+                        reject('NoNameExit');
+                    }
+                }
+            );
         event.preventDefault();
     }
 }
