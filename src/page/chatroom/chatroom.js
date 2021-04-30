@@ -13,7 +13,7 @@ export class ChatRoom extends React.Component
             //PostChatRoomID : null,
             ChatRoomID : null,
             user_name : null,
-            
+            isMount : false,
             //ifUpdated : true
         }   
         //this.UpdatChatRoomID = this.UpdatChatRoomID.bind(this);
@@ -40,13 +40,16 @@ export class ChatRoom extends React.Component
         console.log('Mount : ' + this.props.ChatRoomID);
         this.props.StartTask();
 
+        this.setState({isMount: true})
+
         if(this.state.user_name == null)
         {
             let uid = firebase.auth().currentUser.uid;
             let setRef = firebase.database().ref('user_data/'+ uid + '/setting');
             setRef.once('value',(data)=>{
                 //console.log(data.val().user_name);
-                this.setState({user_name : data.val().user_name });
+                if(this.state.isMount)
+                    this.setState({user_name : data.val().user_name });
             });
         }
 
