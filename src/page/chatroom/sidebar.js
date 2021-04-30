@@ -15,12 +15,15 @@ export class Sidebar extends React.Component
 
         this.state = {
             ifCreateGroup : false,
-            ifCreateEnter : false
+            ifCreateEnter : false,
+            isUpdate : false,
         };
+        // this.isMount = false;
 
 
-        this.GroupsList = [];
-        this.GroupsList.push(this.createDivider('My Group'));
+        // this.GroupsList = [];
+        // this.GroupsList.push(this.createDivider('My Group'));
+        this.GroupsList = [this.createDivider('My Group')];
 
 
 
@@ -34,19 +37,31 @@ export class Sidebar extends React.Component
 
     componentDidMount()
     {
+        // this.isMount = true;
         //Get all group
         firebase.database().ref('user_data').child(firebase.auth().currentUser.uid).child('chatroom_group')
         .on('child_added',(data)=>{
-            //console.log(data.val().group_id);
-            let gp_id = data.val().group_id;
-            this.GroupsList.push(this.createGroupsListItem('Group : ' + gp_id,gp_id));
-            this.forceUpdate();
+            // console.log(this.isMount);
+            // console.log(data.val().group_id);
+            // if(this.isMount)
+            // {
+                //console.log(data.val().group_id);
+                let gp_id = data.val().group_id;
+                // new_list = [];
+                // let new_list = this.GroupsList.push(this.createGroupsListItem('Group : ' + gp_id,gp_id));
+                this.GroupsList.push(this.createGroupsListItem('Group : ' + gp_id,gp_id));
+                // this.setState({isUpdate: true })
+                // this.GroupsList.push(this.createGroupsListItem('Group : ' + gp_id,gp_id));
+                this.forceUpdate();
+            // }
+            
         });
     }
 
     render()
     {
         return(
+            console.log("IsUpdate : " + this.state.isUpdate),
             <div className="SidebarDiv">
                 { this.state.ifCreateEnter ? this.RenderCreateEnterGroup() : this.RenderList()}
             </div>
@@ -79,14 +94,15 @@ export class Sidebar extends React.Component
     {
         return (
         <div className="SidebarDiv">
-            <ul className="list-group SidebarList">
+            <ul key="SidebarList" className="list-group SidebarList">
                 { 
-                        this.GroupsList.map((item) =>(
-                            <li className="list-group-item p-0">{item}</li>))
+                        this.GroupsList.map((item,index) =>(
+                            // console.log(index),
+                            <li key={index} className="list-group-item p-0">{item}</li>))
                 }
             </ul>
-            <ul className="SiderbarTab nav  mt-auto nav-light nav-tabs nav-fill">
-                <li className="nav-item"  >
+            <ul key="SiderbarTab" className="SiderbarTab nav  mt-auto nav-light nav-tabs nav-fill">
+                <li key="SiderbarTabItems" className="nav-item"  >
                     <label>Create a new one </label>
                     <button type="button" className="btn btn-dark btnSidebarNew" 
                         style={{ backgroundImage : "url(./img/NewGroup.png)" }} onClick={this.btnCreateGroup}

@@ -98,6 +98,7 @@ export class Application extends React.Component
 
     RenderChatRoomPage()
     {
+        console.log("RenderChatRoomPage");
         return ( this.state.iflogin && this.state.ifCheckLogin ? 
                     <Drawer id="CR_Drawer" 
                         Header={<Header UserName={ this.state.UserName } SignOutSuccess={this.SignOutSuccess} />} 
@@ -116,6 +117,7 @@ export class Application extends React.Component
 
     RenderLoginPage()
     {
+        console.log("RenderLoginPage");
         return ( !this.state.iflogin && this.state.ifCheckLogin  ? 
                     <Dialog id="CR_Dialogue" title="Sign In" BackgroundColor='black'>
                         <LoginPage SignInSuccess={this.SignInSuccess} 
